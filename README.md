@@ -104,7 +104,7 @@ The interface is in Simplified Chinese.
 
 ## Notes
 
-**该 Windows 桌面端使用 DeepSeek Harness 制作。**
+**【自用软件】该 Windows 桌面端使用 DeepSeek Harness 制作。**
 
 This Windows desktop app was built with [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
