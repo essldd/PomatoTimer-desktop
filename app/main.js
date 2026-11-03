@@ -17,7 +17,34 @@ const path = require('node:path')
 const fs = require('node:fs')
 
 const ROOT = __dirname
-const DATA_DIR = path.join(ROOT, '..', 'data')
+
+/**
+ * Where settings.json and the Chromium profile live.
+ *
+ * - portable build: next to the portable .exe (PORTABLE_EXECUTABLE_DIR), so the
+ *   whole thing stays self-contained; if that folder is read-only we fall back
+ *   to the normal per-user folder.
+ * - other packaged builds: %APPDATA%\PomatoTimer.
+ * - running from source: <project>/data.
+ */
+const IS_PACKAGED = app.isPackaged
+const PORTABLE_DIR = process.env.PORTABLE_EXECUTABLE_DIR || ''
+
+function resolveDataDir() {
+  if (PORTABLE_DIR) {
+    const candidate = path.join(PORTABLE_DIR, 'data')
+    try {
+      fs.mkdirSync(candidate, { recursive: true })
+      return candidate
+    } catch {
+      /* read-only location: use the per-user folder instead */
+    }
+  }
+  if (IS_PACKAGED) return app.getPath('userData')
+  return path.join(ROOT, '..', 'data')
+}
+
+const DATA_DIR = resolveDataDir()
 const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json')
 
 const SIZES = {
@@ -27,7 +54,10 @@ const SIZES = {
 const TITLE = '番茄钟 Pomodoro'
 const START_MINI = process.argv.includes('--mini')
 
-app.setPath('userData', path.join(DATA_DIR, 'electron'))
+// Keep Chromium's own profile with the settings instead of a second folder.
+if (!IS_PACKAGED || PORTABLE_DIR) {
+  app.setPath('userData', path.join(DATA_DIR, 'electron'))
+}
 
 let win = null
 let mode = START_MINI ? 'mini' : 'panel'

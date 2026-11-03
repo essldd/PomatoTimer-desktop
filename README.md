@@ -14,6 +14,13 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/essldd/PomatoTimer-desktop/releases/latest">
+    <b>⬇ Download for Windows (.exe)</b>
+  </a><br />
+  <sub>Portable — no installer, no Node.js needed · Windows 10/11 x64</sub>
+</p>
+
+<p align="center">
   <img src="docs/panel.png" width="320" alt="PomatoTimer main panel" />
 </p>
 
@@ -36,6 +43,16 @@
 </p>
 
 ## Download & install
+
+### Option 1 — Portable exe (recommended)
+
+1. Open the [latest release](https://github.com/essldd/PomatoTimer-desktop/releases/latest).
+2. Download `PomatoTimer-<version>-portable.exe`.
+3. Double-click it. Nothing to install, no Node.js needed.
+
+Settings and the window position are stored in a `data` folder next to the exe.
+
+### Option 2 — Run from source
 
 **Requirements:** Windows 10/11, [Node.js](https://nodejs.org/) 18 or newer.
 
@@ -61,6 +78,14 @@ create-shortcut.cmd
 ```
 
 Or simply double-click `start.cmd` (it reuses `node_modules` when present).
+
+### Build the exe yourself
+
+```bash
+npm run dist
+```
+
+The portable executable is written to `release\`.
 
 ## Usage
 

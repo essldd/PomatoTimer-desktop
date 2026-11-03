@@ -7,6 +7,7 @@
     "start": "electron .",
     "start:mini": "electron . --mini",
     "test": "node test/timer.test.cjs",
+    "dist": "electron-builder --win portable",
     "make-icon": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/make-icon.ps1"
   },
   "keywords": [
@@ -21,6 +22,33 @@
   "author": "essldd",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^44.7.0"
+    "electron": "^44.7.0",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.essldd.pomato",
+    "productName": "PomatoTimer",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "app/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "app/assets/tomato.ico"
+    },
+    "portable": {
+      "artifactName": "PomatoTimer-${version}-portable.exe"
+    }
   }
 }

@@ -7,5 +7,9 @@ data/
 # Offline Electron bundle for machines that cannot download Electron
 runtime/
 
+# electron-builder output
+release/
+dist/
+
 # Logs
 *.log

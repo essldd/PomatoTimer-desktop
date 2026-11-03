@@ -14,6 +14,13 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/essldd/PomatoTimer-desktop/releases/latest">
+    <b>⬇ 下载 Windows 版（.exe）</b>
+  </a><br />
+  <sub>便携版 —— 免安装、无需 Node.js · Windows 10/11 x64</sub>
+</p>
+
+<p align="center">
   <img src="docs/panel.png" width="320" alt="主界面" />
 </p>
 
@@ -36,6 +43,16 @@
 </p>
 
 ## 下载与安装
+
+### 方式一：便携版 exe（推荐）
+
+1. 打开 [最新 Release](https://github.com/essldd/PomatoTimer-desktop/releases/latest)。
+2. 下载 `PomatoTimer-<版本>-portable.exe`。
+3. 双击运行。免安装，也不需要 Node.js。
+
+设置与窗口位置保存在 exe 同级的 `data` 目录里。
+
+### 方式二：从源码运行
 
 **环境要求：** Windows 10/11，[Node.js](https://nodejs.org/) 18 或更高版本。
 
@@ -61,6 +78,14 @@ create-shortcut.cmd
 ```
 
 也可以直接双击 `start.cmd`（存在 `node_modules` 时会自动使用它）。
+
+### 自行打包 exe
+
+```bash
+npm run dist
+```
+
+便携版 exe 会生成在 `release\` 目录。
 
 ## 使用说明
 
