@@ -1,0 +1,26 @@
+{
+  "name": "pomato-timer-desktop",
+  "version": "1.0.0",
+  "description": "A movable, always-on-top Pomodoro timer for Windows, with a mini pill window showing only the tomato icon and the countdown.",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron .",
+    "start:mini": "electron . --mini",
+    "test": "node test/timer.test.cjs",
+    "make-icon": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/make-icon.ps1"
+  },
+  "keywords": [
+    "pomodoro",
+    "pomodoro-timer",
+    "timer",
+    "electron",
+    "windows",
+    "always-on-top",
+    "floating-window"
+  ],
+  "author": "essldd",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^44.7.0"
+  }
+}

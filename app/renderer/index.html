@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'"
+    />
+    <title>番茄钟 Pomodoro</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-mode="panel">
+    <section id="panel" class="panel">
+      <header class="head" id="dragPanel" title="按住拖动窗口">
+        <span class="tomato" id="tomatoPanel" aria-hidden="true"></span>
+        <span class="title">番茄钟</span>
+        <span class="chip" id="phaseChip" data-phase="focus">专注</span>
+        <span class="headgap"></span>
+        <button class="iconbtn" id="btnMini" type="button" title="最小化为置顶浮窗" aria-label="最小化为置顶浮窗">–</button>
+        <button class="iconbtn" id="btnQuit" type="button" title="退出" aria-label="退出">×</button>
+      </header>
+
+      <div class="ringwrap">
+        <svg class="ring" viewBox="0 0 200 200" role="img" aria-label="剩余时间">
+          <circle class="ringTrack" cx="100" cy="100" r="86"></circle>
+          <circle class="ringBar" id="ringBar" cx="100" cy="100" r="86"></circle>
+        </svg>
+        <div class="ringcenter">
+          <div class="time" id="time">25:00</div>
+          <div class="phasetext" id="phaseText">专注</div>
+        </div>
+      </div>
+
+      <div class="notice" id="notice" role="status" aria-live="polite" hidden></div>
+
+      <div class="controls">
+        <button class="primary" id="btnPrimary" type="button">开始</button>
+        <button class="secondary" id="btnReset" type="button">重置</button>
+      </div>
+
+      <button class="skip" id="btnSkip" type="button" hidden>跳过休息</button>
+
+      <div class="settings">
+        <div class="row">
+          <span class="rowlabel">专注时长</span>
+          <button class="step" type="button" data-target="focus" data-delta="-1" aria-label="减少专注时长">−</button>
+          <input class="num" id="focusInput" type="number" min="1" max="180" aria-label="专注时长（分钟）" />
+          <button class="step" type="button" data-target="focus" data-delta="1" aria-label="增加专注时长">+</button>
+          <span class="unit">分钟</span>
+        </div>
+        <div class="row">
+          <span class="rowlabel">短休息</span>
+          <button class="step" type="button" data-target="break" data-delta="-1" aria-label="减少休息时长">−</button>
+          <input class="num" id="breakInput" type="number" min="1" max="120" aria-label="短休息（分钟）" />
+          <button class="step" type="button" data-target="break" data-delta="1" aria-label="增加休息时长">+</button>
+          <span class="unit">分钟</span>
+        </div>
+        <div class="hint" id="hint">开始前可调整时长</div>
+      </div>
+
+      <div class="today">
+        <span class="todaylabel">今日专注</span>
+        <span class="todayvalue" id="todayValue">0</span>
+        <span class="unit">分钟</span>
+        <span class="todaysec" id="todaySec"></span>
+        <span class="rounds" id="rounds">已完成 0 轮</span>
+      </div>
+
+      <p class="note">
+        拖动顶部可移动窗口 · 最小化后变成置顶小浮窗（仅图标 + 倒计时），悬停可还原或退出
+      </p>
+    </section>
+
+    <section id="mini" class="mini" hidden title="番茄钟（拖动移动）">
+      <span class="tomato" id="tomatoMini" aria-hidden="true"></span>
+      <span class="minitime" id="miniTime">25:00</span>
+      <span class="miniactions">
+        <button class="minibtn" id="btnRestore" type="button" title="还原面板" aria-label="还原面板">⤢</button>
+        <button class="minibtn" id="btnQuitMini" type="button" title="退出" aria-label="退出">×</button>
+      </span>
+    </section>
+
+    <script src="timer.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

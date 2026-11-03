@@ -1,0 +1,455 @@
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f4f5f7;
+  --line: rgba(15, 23, 42, 0.12);
+  --edge: rgba(15, 23, 42, 0.1);
+  --text: #0f172a;
+  --muted: #64748b;
+  --brand: #e2553f;
+  --break: #2e9e5b;
+  --warn: #c2760a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1d22;
+    --bg-soft: #24272e;
+    --line: rgba(255, 255, 255, 0.14);
+    --edge: rgba(255, 255, 255, 0.12);
+    --text: #f2f4f8;
+    --muted: #9aa3b2;
+    --brand: #ff6b52;
+    --break: #3ec97a;
+    --warn: #f0b429;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+  cursor: default;
+  font-family: 'Microsoft YaHei UI', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.tomato {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.tomato svg {
+  display: block;
+}
+
+/* ---------------- panel ---------------- */
+
+.panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 14px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--edge);
+  background: var(--bg);
+  /* No box-shadow: the panel fills the window, so any outer shadow is clipped
+     and only risks tinting the transparent corner area. The window itself is
+     shadow-free too (main.js `hasShadow: false`). */
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  -webkit-app-region: drag;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.headgap {
+  flex: 1;
+}
+
+.chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.chip[data-phase='break'] {
+  color: var(--break);
+  border-color: var(--break);
+}
+
+.chip[data-status='paused'] {
+  color: var(--warn);
+  border-color: var(--warn);
+}
+
+.iconbtn {
+  -webkit-app-region: no-drag;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.iconbtn:hover {
+  background: var(--bg-soft);
+  color: var(--text);
+}
+
+.iconbtn:focus-visible,
+.step:focus-visible,
+.primary:focus-visible,
+.secondary:focus-visible,
+.skip:focus-visible,
+.minibtn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+}
+
+.ringwrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Absorb the slack of the fixed-size window so the panel never shows a
+     dead band under the footer when no notice is displayed. */
+  flex: 1 1 auto;
+  min-height: 190px;
+}
+
+.ring {
+  width: 190px;
+  height: 190px;
+  display: block;
+}
+
+.ringTrack {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 10;
+}
+
+.ringBar {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 100px 100px;
+  transition: stroke-dashoffset 0.25s linear, stroke 0.3s ease;
+}
+
+body[data-phase='break'] .ringBar {
+  stroke: var(--break);
+}
+
+.ringcenter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.time {
+  font-size: 38px;
+  font-weight: 650;
+  line-height: 1.05;
+  letter-spacing: 0.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.phasetext {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.notice {
+  border-radius: 9px;
+  padding: 7px 10px;
+  font-size: 12px;
+  line-height: 1.45;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--muted);
+}
+
+.notice[data-tone='focus-end'] {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.notice[data-tone='break-end'] {
+  border-color: var(--break);
+  color: var(--break);
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.primary {
+  flex: 1;
+  height: 42px;
+  border: 1px solid var(--brand);
+  border-radius: 10px;
+  background: var(--brand);
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary:hover {
+  filter: brightness(1.06);
+}
+
+.secondary {
+  height: 42px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.secondary:hover {
+  background: var(--bg-soft);
+}
+
+.skip {
+  height: 30px;
+  border: 1px dashed var(--break);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--break);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.skip:hover {
+  background: var(--bg-soft);
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+}
+
+.rowlabel {
+  flex: 1;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.step {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.step:hover:not(:disabled) {
+  background: var(--bg-soft);
+}
+
+.step:disabled,
+.num:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.num {
+  width: 52px;
+  height: 26px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -webkit-app-region: no-drag;
+}
+
+.unit {
+  font-size: 11px;
+  color: var(--muted);
+  min-width: 24px;
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.today {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--bg-soft);
+}
+
+.todaylabel {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.todayvalue {
+  font-size: 19px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.todaysec {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.rounds {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.note {
+  margin: 0;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ---------------- mini ---------------- */
+
+.mini {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 14px;
+  border-radius: 29px;
+  border: 1px solid var(--edge);
+  background: var(--bg);
+  -webkit-app-region: drag;
+  cursor: move;
+}
+
+.minitime {
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: 0.4px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.mini[data-phase='break'] .minitime {
+  color: var(--break);
+}
+
+.mini[data-status='paused'] .minitime {
+  color: var(--warn);
+}
+
+.miniactions {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  -webkit-app-region: no-drag;
+}
+
+.mini:hover .miniactions {
+  opacity: 1;
+}
+
+.minibtn {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.minibtn:hover {
+  background: var(--bg-soft);
+  color: var(--text);
+}

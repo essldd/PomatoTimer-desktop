@@ -1,0 +1,11 @@
+# Installed Electron (the normal checkout)
+node_modules/
+
+# Local runtime state: settings, window box, Chromium profile
+data/
+
+# Offline Electron bundle for machines that cannot download Electron
+runtime/
+
+# Logs
+*.log
