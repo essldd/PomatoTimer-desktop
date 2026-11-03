@@ -1,7 +1,0 @@
-{
-  "name": "pomodoro-desktop",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Windows desktop Pomodoro timer: a movable floating panel plus an always-on-top mini window.",
-  "main": "main.js"
-}
